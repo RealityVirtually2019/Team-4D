@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using cakeslice;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 
@@ -11,7 +9,7 @@ public class GazeManager : MonoBehaviour
     protected SpriteRenderer clock;
 
     private Camera cam;
-    private GlowObject currentObject;
+    private Outline currentObject;
     private float timeLookingAtCurrentObject;
 
     private ClockAnimator animator;
@@ -51,10 +49,10 @@ public class GazeManager : MonoBehaviour
         bool detectedGlowObject = false;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hitInfo, 20.0f, Physics.DefaultRaycastLayers))
         {
-            GlowObject glowObject = hitInfo.transform.gameObject.GetComponent<GlowObject>();
+            Outline glowObject = hitInfo.transform.gameObject.GetComponent<Outline>();
             if (glowObject != null)
             {
-                glowObject.OnRaycastHit();
+                glowObject.eraseRenderer = false;
                 currentObject = glowObject;
                 timeLookingAtCurrentObject += Time.deltaTime;
                 animator.SetElapsedTime(timeLookingAtCurrentObject);
@@ -63,7 +61,7 @@ public class GazeManager : MonoBehaviour
         }
         if (!detectedGlowObject && currentObject != null)
         {
-            currentObject.OnRaycastEnd();
+            currentObject.eraseRenderer = true;
             timeLookingAtCurrentObject = 0f;
             currentObject = null;
             animator.SetElapsedTime(timeLookingAtCurrentObject);
