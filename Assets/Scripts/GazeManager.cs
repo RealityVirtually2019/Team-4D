@@ -1,4 +1,4 @@
-﻿using cakeslice;
+using cakeslice;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 
@@ -22,8 +22,10 @@ public class GazeManager : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         timeLookingAtCurrentObject = 0f;
-        animator = clock.GetComponent<ClockAnimator>();
         startingYRotation = gameObject.transform.rotation.y;
+
+        animator = clock.GetComponent<ClockAnimator>();
+        animator.AnimationEnded += OnAnimationEnded;
 
         recognizer = new GestureRecognizer();
         recognizer.SetRecognizableGestures(GestureSettings.Tap | GestureSettings.Hold);
@@ -73,11 +75,20 @@ public class GazeManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        animator.AnimationEnded -= OnAnimationEnded;
         recognizer.Tapped -= OnGestureTapped;
         recognizer.HoldStarted -= OnGestureHoldStart;
         recognizer.HoldCompleted -= OnGestureHoldComplete;
         recognizer.HoldCanceled -= OnGestureHoldCanceled;
         recognizer.StopCapturingGestures();
+    }
+
+    private void OnAnimationEnded(AnimationEndedArgs args)
+    {
+        if (args.Finished && currentObject != null)
+        {
+            currentObject.transform.parent = gameObject.transform;
+        }
     }
 
     private void OnGestureTapped(TappedEventArgs args)
