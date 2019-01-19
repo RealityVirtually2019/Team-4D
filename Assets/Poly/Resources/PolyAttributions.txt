@@ -1,0 +1,43 @@
+This project uses the following items from Poly (http://poly.google.com):
+
+Title: AJ 3 minutes after
+Author: Apassara J
+URL: https://poly.google.com/view/1GxeL2yzZlm
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode
+
+Title: AJ Dimensions
+Author: Apassara J
+URL: https://poly.google.com/view/dd-IM0-ExC-
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode
+
+Title: Bamboo Fence Panel
+Author: Jarlan Perez
+URL: https://poly.google.com/view/dVwByrifEmj
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode
+
+Title: Crate
+Author: Robin Brook
+URL: https://poly.google.com/view/fKox3UXY7sU
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode
+
+Title: Empty Chest
+Author: Daniel Timko
+URL: https://poly.google.com/view/3I2OiZ92Nz7
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode
+
+Title: Fish Tank 🎏
+Author: Chris Ross
+URL: https://poly.google.com/view/2Rb9zxgkDEM
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode
+
+Title: Zub Sphere TheWave
+Author: MusicForTheM1nd AKA Zyro1331 (Zyro1331)
+URL: https://poly.google.com/view/0mIS0GO454d
+License: Creative Commons CC-BY
+https://creativecommons.org/licenses/by/3.0/legalcode

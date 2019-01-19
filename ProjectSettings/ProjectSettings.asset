@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 15
-  productGUID: 4246ba12d4d0dd84c820388dbc18fd0a
+  productGUID: 6507d187e9f798e4cab7a1b0ff9b1458
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -255,11 +255,7 @@ PlayerSettings:
   m_BuildTargetPlatformIcons: []
   m_BuildTargetBatching: []
   m_BuildTargetGraphicsAPIs: []
-  m_BuildTargetVRSettings:
-  - m_BuildTarget: Metro
-    m_Enabled: 1
-    m_Devices:
-    - WindowsMR
+  m_BuildTargetVRSettings: []
   m_BuildTargetEnableVuforiaSettings: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
@@ -498,7 +494,7 @@ PlayerSettings:
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
-  allowUnsafeCode: 0
+  allowUnsafeCode: 1
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   apiCompatibilityLevelPerPlatform: {}
@@ -506,11 +502,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: Team 4D
   metroPackageVersion: 
-  metroCertificatePath: Assets\WSATestCertificate.pfx
+  metroCertificatePath: 
   metroCertificatePassword: 
-  metroCertificateSubject: DefaultCompany
-  metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 80eff0a495ced501
+  metroCertificateSubject: 
+  metroCertificateIssuer: 
+  metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Team 4D
   wsaImages: {}
   metroTileShortName: 
