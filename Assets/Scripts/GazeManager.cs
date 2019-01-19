@@ -1,4 +1,4 @@
-﻿using cakeslice;
+using cakeslice;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 
@@ -75,6 +75,7 @@ public class GazeManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        animator.AnimationEnded -= OnAnimationEnded;
         recognizer.Tapped -= OnGestureTapped;
         recognizer.HoldStarted -= OnGestureHoldStart;
         recognizer.HoldCompleted -= OnGestureHoldComplete;
