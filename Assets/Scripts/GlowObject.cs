@@ -25,11 +25,11 @@ public class GlowObject : MonoBehaviour
 	{
 		Renderers = GetComponentsInChildren<Renderer>();
 
-		foreach (var renderer in Renderers)
+        foreach (var renderer in Renderers)
 		{	
 			_materials.AddRange(renderer.materials);
 		}
-	}
+    }
 
     public void OnRaycastHit()
     {
@@ -57,7 +57,7 @@ public class GlowObject : MonoBehaviour
 
 		if (_currentColor.Equals(_targetColor))
 		{
-			enabled = false;
+			// enabled = false;
 		}
 	}
 }
