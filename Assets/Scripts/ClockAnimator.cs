@@ -35,10 +35,11 @@ public class ClockAnimator : MonoBehaviour
         if (timeElapsed == 0f)
         {
             GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.8f);
-        } else
-        {
             isAnimating = true;
-            AnimationStarted(new AnimationStartedArgs(duration, frames.Length));
+            if (AnimationStarted != null)
+            {
+                AnimationStarted(new AnimationStartedArgs(duration, frames.Length));
+            }
         }
         timeElapsed = time;
         CheckFrame();
