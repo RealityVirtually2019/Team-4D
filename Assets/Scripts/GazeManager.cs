@@ -15,12 +15,15 @@ public class GazeManager : MonoBehaviour
     private ClockAnimator animator;
     private GestureRecognizer recognizer;
 
+    private float startingYRotation;
+
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
         timeLookingAtCurrentObject = 0f;
         animator = clock.GetComponent<ClockAnimator>();
+        startingYRotation = gameObject.transform.rotation.y;
 
         recognizer = new GestureRecognizer();
         recognizer.SetRecognizableGestures(GestureSettings.Tap | GestureSettings.Hold);
@@ -37,8 +40,8 @@ public class GazeManager : MonoBehaviour
         DetectGlowObjects();
 
         int speed = 5;
-        if (Input.GetKey(KeyCode.UpArrow)) transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * speed);
-        if (Input.GetKey(KeyCode.DownArrow)) transform.Rotate(new Vector3(0, 1, 0) * Time.deltaTime * speed);
+        if (Input.GetKey(KeyCode.UpArrow)) transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * speed * 10);
+        if (Input.GetKey(KeyCode.DownArrow)) transform.Rotate(new Vector3(0, 1, 0) * Time.deltaTime * speed * 10);
         if (Input.GetKey(KeyCode.LeftArrow)) transform.Translate(new Vector3(-1, 0, 0) * Time.deltaTime * speed);
         if (Input.GetKey(KeyCode.RightArrow)) transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * speed);
 
