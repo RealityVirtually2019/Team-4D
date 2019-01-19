@@ -9,7 +9,7 @@ using Academy.HoloToolkit.Unity;
 /// </summary>
 public enum PlacementSurfaces
 {
-    // Horizontal surface with an upward pointing normal.    
+    // Horizontal surface with an upward pointing normal.
     Horizontal = 1,
 
     // Vertical surface with a normal facing the user.
@@ -51,7 +51,7 @@ public class Placeable : MonoBehaviour
     /// </summary>
     public bool IsPlacing { get; private set; }
 
-    // The most recent distance to the surface.  This is used to 
+    // The most recent distance to the surface.  This is used to
     // locate the object when the user's gaze does not intersect
     // with the Spatial Mapping mesh.
     private float lastDistance = 2.0f;
@@ -117,24 +117,6 @@ public class Placeable : MonoBehaviour
         shadowAsset = GameObject.CreatePrimitive(PrimitiveType.Quad);
         shadowAsset.transform.parent = gameObject.transform;
         shadowAsset.SetActive(false);
-    }
-
-    /// <summary>
-    /// Called when our object is selected.  Generally called by
-    /// a gesture management component.
-    /// </summary>
-    public void OnSelect()
-    {
-        /* TODO: 4.a CODE ALONG 4.a */
-
-        if (!IsPlacing)
-        {
-            OnPlacementStart();
-        }
-        else
-        {
-            OnPlacementStop();
-        }
     }
 
     /// <summary>
@@ -208,7 +190,7 @@ public class Placeable : MonoBehaviour
 
         Vector3[] facePoints = GetColliderFacePoints();
 
-        // The origin points we receive are in local space and we 
+        // The origin points we receive are in local space and we
         // need to raycast in world space.
         for (int i = 0; i < facePoints.Length; i++)
         {
@@ -259,7 +241,7 @@ public class Placeable : MonoBehaviour
     }
 
     /// <summary>
-    /// Determine the coordinates, in local space, of the box collider face that 
+    /// Determine the coordinates, in local space, of the box collider face that
     /// will be placed against the target surface.
     /// </summary>
     /// <returns>
@@ -267,7 +249,7 @@ public class Placeable : MonoBehaviour
     /// </returns>
     private Vector3[] GetColliderFacePoints()
     {
-        // Get the collider extents.  
+        // Get the collider extents.
         // The size values are twice the extents.
         Vector3 extents = boxCollider.size / 2;
 
@@ -308,71 +290,6 @@ public class Placeable : MonoBehaviour
     }
 
     /// <summary>
-    /// Put the object into placement mode.
-    /// </summary>
-    public void OnPlacementStart()
-    {
-        // If we are managing the collider, enable it. 
-        if (managingBoxCollider)
-        {
-            boxCollider.enabled = true;
-        }
-
-        // Hide the child object(s) to make placement easier.
-        for (int i = 0; i < ChildrenToHide.Count; i++)
-        {
-            ChildrenToHide[i].SetActive(false);
-        }
-
-        // Tell the gesture manager that it is to assume
-        // all input is to be given to this object.
-        GestureManager.Instance.OverrideFocusedObject = gameObject;
-
-        // Enter placement mode.
-        IsPlacing = true;
-    }
-
-    /// <summary>
-    /// Take the object out of placement mode.
-    /// </summary>
-    /// <remarks>
-    /// This method will leave the object in placement mode if called while
-    /// the object is in an invalid location.  To determine whether or not
-    /// the object has been placed, check the value of the IsPlacing property.
-    /// </remarks>
-    public void OnPlacementStop()
-    {
-        // ValidatePlacement requires a normal as an out parameter.
-        Vector3 position;
-        Vector3 surfaceNormal;
-
-        // Check to see if we can exit placement mode.
-        if (!ValidatePlacement(out position, out surfaceNormal))
-        {
-            return;
-        }
-
-        // The object is allowed to be placed.
-        // We are placing at a small buffer away from the surface.
-        targetPosition = position + (0.01f * surfaceNormal);
-
-        OrientObject(true, surfaceNormal);
-
-        // If we are managing the collider, disable it. 
-        if (managingBoxCollider)
-        {
-            boxCollider.enabled = false;
-        }
-
-        // Tell the gesture manager that it is to resume
-        // its normal behavior.
-        GestureManager.Instance.OverrideFocusedObject = null;
-
-        // Exit placement mode.
-        IsPlacing = false;
-    }
-
-    /// <summary>
     /// Positions the object along the surface toward which the user is gazing.
     /// </summary>
     /// <remarks>
@@ -395,7 +312,7 @@ public class Placeable : MonoBehaviour
         {
             float offsetDistance = hoverDistance;
 
-            // Place the object a small distance away from the surface while keeping 
+            // Place the object a small distance away from the surface while keeping
             // the object from going behind the user.
             if (hitInfo.distance <= hoverDistance)
             {
@@ -428,8 +345,8 @@ public class Placeable : MonoBehaviour
     /// Orients the object so that it faces the user.
     /// </summary>
     /// <param name="alignToVerticalSurface">
-    /// If true and the object is to be placed on a vertical surface, 
-    /// orient parallel to the target surface.  If false, orient the object 
+    /// If true and the object is to be placed on a vertical surface,
+    /// orient parallel to the target surface.  If false, orient the object
     /// to face the user.
     /// </param>
     /// <param name="surfaceNormal">
@@ -533,7 +450,7 @@ public class Placeable : MonoBehaviour
             shadowAsset.GetComponent<Renderer>().sharedMaterial = NotPlaceableShadowMaterial;
         }
 
-        // Show the shadow asset as appropriate.        
+        // Show the shadow asset as appropriate.
         if (position != Vector3.zero)
         {
             // Position the shadow a small distance from the target surface, along the normal.
@@ -547,7 +464,7 @@ public class Placeable : MonoBehaviour
     }
 
     /// <summary>
-    /// Determines if two distance values should be considered equivalent. 
+    /// Determines if two distance values should be considered equivalent.
     /// </summary>
     /// <param name="d1">
     /// Distance to compare.
