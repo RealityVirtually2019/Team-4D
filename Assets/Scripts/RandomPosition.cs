@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Academy.HoloToolkit.Unity;
 
-public class RandomPosition : MonoBehaviour
+public class RandomPosition : Singleton<RandomPosition>
 {
     [SerializeField]
     public int numberOfCrates = 3;
@@ -8,6 +9,28 @@ public class RandomPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Freeze everything
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            gameObject.transform.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void GenerateCopies()
+    {
+        Debug.Log("Fuck");
+        // Un-Freeze everything
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            gameObject.transform.GetChild(i).gameObject.SetActive(true);
+        }
+
         // Set the bamboo shit to be the right distance
         Transform bamboo = gameObject.transform.GetChild(1);
         MoveCrateToRandom(bamboo);
@@ -25,12 +48,6 @@ public class RandomPosition : MonoBehaviour
             MoveCrateToRandom(copy.transform, distance, bamboo);
             copy.transform.parent = gameObject.transform;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void MoveCrateToRandom(Transform crate, float distance = -1, Transform checkForBamboozle = null)

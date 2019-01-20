@@ -143,6 +143,9 @@ public class PlaySpaceManager : Singleton<PlaySpaceManager>
             // re-setting meshesProcessed to false.
             meshesProcessed = false;
         }
+
+        // We need to work with the scene. Let's do it!
+        RandomPosition.Instance.GenerateCopies();
     }
 
     /// <summary>
