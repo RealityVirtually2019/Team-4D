@@ -46,13 +46,6 @@ public class GazeManager : MonoBehaviour
     void Update()
     {
         DetectGlowObjects();
-
-        int speed = 5;
-        if (Input.GetKey(KeyCode.UpArrow)) transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * speed * 10);
-        if (Input.GetKey(KeyCode.DownArrow)) transform.Rotate(new Vector3(0, 1, 0) * Time.deltaTime * speed * 10);
-        if (Input.GetKey(KeyCode.LeftArrow)) transform.Translate(new Vector3(-1, 0, 0) * Time.deltaTime * speed);
-        if (Input.GetKey(KeyCode.RightArrow)) transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * speed);
-
     }
 
     private void DetectGlowObjects()
@@ -65,6 +58,10 @@ public class GazeManager : MonoBehaviour
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hitInfo, 20.0f, Physics.DefaultRaycastLayers))
         {
             Outline glowObject = hitInfo.transform.gameObject.GetComponent<Outline>();
+            if (glowObject == null && hitInfo.transform.childCount > 0)
+            {
+                glowObject = hitInfo.transform.GetChild(0).gameObject.GetComponent<Outline>();
+            }
             if (glowObject != null)
             {
                 glowObject.eraseRenderer = false;
@@ -86,11 +83,15 @@ public class GazeManager : MonoBehaviour
     private void OnDestroy()
     {
         animator.AnimationEnded -= OnAnimationEnded;
-        recognizer.Tapped -= OnGestureTapped;
-        recognizer.HoldStarted -= OnGestureHoldStart;
-        recognizer.HoldCompleted -= OnGestureHoldComplete;
-        recognizer.HoldCanceled -= OnGestureHoldCanceled;
-        recognizer.StopCapturingGestures();
+        if (recognizer != null)
+        {
+            recognizer.Tapped -= OnGestureTapped;
+            recognizer.HoldStarted -= OnGestureHoldStart;
+            recognizer.HoldCompleted -= OnGestureHoldComplete;
+            recognizer.HoldCanceled -= OnGestureHoldCanceled;
+            recognizer.StopCapturingGestures();
+
+        }
     }
 
     private void OnAnimationEnded(AnimationEndedArgs args)

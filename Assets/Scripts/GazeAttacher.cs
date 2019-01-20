@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Academy.HoloToolkit.Unity;
 
 [RequireComponent(typeof(Camera))]
 [RequireComponent(typeof(GazeManager))]
-public class GazeAttacher : MonoBehaviour
+[RequireComponent(typeof(AudioSource))]
+public class GazeAttacher : Singleton<GazeAttacher>
 {
+    [SerializeField]
+    public AudioClip playOnAttach;
+
     private GazeManager manager;
 
     // Start is called before the first frame update
@@ -22,6 +24,11 @@ public class GazeAttacher : MonoBehaviour
         
     }
 
+    public void DetachOutline()
+    {
+        manager.shouldObserveOutlines = true;
+    }
+
     private void OnDestroy()
     {
         manager.OnSelectedOutline -= OnSelectedOutline;
@@ -30,7 +37,15 @@ public class GazeAttacher : MonoBehaviour
 
     private void OnSelectedOutline(SelectedOutlineArgs args)
     {
-        args.OutlineObject.transform.parent.parent = gameObject.transform;
+        Transform crateEmpty = args.OutlineObject.transform.parent;
+        crateEmpty.parent = gameObject.transform;
+        crateEmpty.GetComponent<BoxCollider>().isTrigger = true;
         manager.shouldObserveOutlines = false;
+
+        // Play game sound
+        if (playOnAttach != null)
+        {
+            GetComponent<AudioSource>().PlayOneShot(playOnAttach);
+        }
     }
 }
