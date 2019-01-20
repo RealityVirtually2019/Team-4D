@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Camera))]
 [RequireComponent(typeof(GazeManager))]
@@ -29,6 +30,11 @@ public class GazeSelector : MonoBehaviour
 
     private void OnSelectedOutline(SelectedOutlineArgs args)
     {
-        Debug.Log(args.OutlineObject);
+        switch (args.OutlineObject.name)
+        {
+            case "Start Image":
+              SceneManager.LoadScene("Scenes/Game", LoadSceneMode.Single);
+              break;
+        }
     }
 }
