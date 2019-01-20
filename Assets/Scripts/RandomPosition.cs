@@ -58,6 +58,7 @@ public class RandomPosition : Singleton<RandomPosition>
         for (int i = 0; i < numberOfCrates - 1; i++)
         {
             GameObject copy = Instantiate(crate.gameObject);
+            copy.name = crate.name;
             MoveCrateToRandom(copy.transform, distance, bamboo);
             copy.transform.parent = gameObject.transform;
         }

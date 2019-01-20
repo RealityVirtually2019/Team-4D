@@ -59,7 +59,7 @@ public class ClockAnimator : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().sprite = frames[currentFrame];
         }
-        else
+        else if (AnimationEnded != null)
         {
             if (currentFrame == frames.Length && currentFrame - 1 == oldFrame)
             {
@@ -68,6 +68,10 @@ public class ClockAnimator : MonoBehaviour
             {
                 AnimationEnded(new AnimationEndedArgs(false, oldFrame));
             }
+            ResetAnimation();
+        }
+        else
+        {
             ResetAnimation();
         }
     }
