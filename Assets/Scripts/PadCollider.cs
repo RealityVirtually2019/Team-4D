@@ -49,7 +49,7 @@ public class PadCollider : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider collider)
+    private void OnTriggerEnter(Collider collider)
     {
         if (collider.name == "Crate" || collider.tag == "Crate")
         {
@@ -64,7 +64,7 @@ public class PadCollider : MonoBehaviour
             // Prevent the crate from moving
             crate.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             // Turn off gaze outline
-            crate.GetChild(0).GetComponent<Outline>().enabled = false;
+            Destroy(crate.GetChild(0).GetComponent<Outline>());
 
             if (!bottomLeft)
             {
