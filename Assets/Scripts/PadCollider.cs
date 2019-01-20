@@ -1,7 +1,9 @@
 ﻿using cakeslice;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class PadCollider : MonoBehaviour
@@ -17,6 +19,11 @@ public class PadCollider : MonoBehaviour
     private bool bottomRight;
     private bool topLeft;
     private bool topRight;
+
+    public static int CountTrue(params bool[] args)
+    {
+        return args.Count(t => t);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -94,6 +101,10 @@ public class PadCollider : MonoBehaviour
             if (playOnPlacement != null)
             {
                 GetComponent<AudioSource>().PlayOneShot(playOnPlacement);
+            }
+
+            if (CountTrue(topLeft, topRight, bottomLeft, bottomRight) >= 3) {
+                SceneManager.LoadScene("Scenes/End", LoadSceneMode.Single);
             }
         }
     }
