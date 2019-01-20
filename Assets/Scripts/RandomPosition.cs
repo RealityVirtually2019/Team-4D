@@ -6,9 +6,15 @@ public class RandomPosition : Singleton<RandomPosition>
     [SerializeField]
     public int numberOfCrates = 3;
 
+    private int tryCount;
+    private bool generated;
+
     // Start is called before the first frame update
     void Start()
     {
+        tryCount = 0;
+        generated = false;
+
         // Freeze everything
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
@@ -24,7 +30,14 @@ public class RandomPosition : Singleton<RandomPosition>
 
     public void GenerateCopies()
     {
-        Debug.Log("Fuck");
+        if (generated)
+        {
+            return;
+        } else
+        {
+            generated = true;
+        }
+
         // Un-Freeze everything
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
@@ -65,8 +78,8 @@ public class RandomPosition : Singleton<RandomPosition>
         }
         if (checkForBamboozle != null)
         {
-            while (crate.GetComponent<CrateCollider>().isColliding) {
-                Debug.Log("Detected collision. Moving");
+            while (tryCount < 10 && crate.GetComponent<CrateCollider>().isColliding) {
+                tryCount++;
                 newX = GetRandomPosition(LOW, HIGH);
                 newZ = GetZFromX(newX, distance);
             }
