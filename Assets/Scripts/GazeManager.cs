@@ -64,6 +64,7 @@ public class GazeManager : MonoBehaviour
             }
             if (glowObject != null)
             {
+                Debug.Log(glowObject.name);
                 glowObject.eraseRenderer = false;
                 currentObject = glowObject;
                 timeLookingAtCurrentObject += Time.deltaTime;
