@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using cakeslice;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 
@@ -11,18 +9,23 @@ public class GazeManager : MonoBehaviour
     protected SpriteRenderer clock;
 
     private Camera cam;
-    private GlowObject currentObject;
+    private Outline currentObject;
     private float timeLookingAtCurrentObject;
 
     private ClockAnimator animator;
     private GestureRecognizer recognizer;
+
+    private float startingYRotation;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
         timeLookingAtCurrentObject = 0f;
+        startingYRotation = gameObject.transform.rotation.y;
+
         animator = clock.GetComponent<ClockAnimator>();
+        animator.AnimationEnded += OnAnimationEnded;
 
         recognizer = new GestureRecognizer();
         recognizer.SetRecognizableGestures(GestureSettings.Tap | GestureSettings.Hold);
@@ -39,8 +42,8 @@ public class GazeManager : MonoBehaviour
         DetectGlowObjects();
 
         int speed = 5;
-        if (Input.GetKey(KeyCode.UpArrow)) transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * speed);
-        if (Input.GetKey(KeyCode.DownArrow)) transform.Rotate(new Vector3(0, 1, 0) * Time.deltaTime * speed);
+        if (Input.GetKey(KeyCode.UpArrow)) transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime * speed * 10);
+        if (Input.GetKey(KeyCode.DownArrow)) transform.Rotate(new Vector3(0, 1, 0) * Time.deltaTime * speed * 10);
         if (Input.GetKey(KeyCode.LeftArrow)) transform.Translate(new Vector3(-1, 0, 0) * Time.deltaTime * speed);
         if (Input.GetKey(KeyCode.RightArrow)) transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * speed);
 
@@ -51,10 +54,10 @@ public class GazeManager : MonoBehaviour
         bool detectedGlowObject = false;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hitInfo, 20.0f, Physics.DefaultRaycastLayers))
         {
-            GlowObject glowObject = hitInfo.transform.gameObject.GetComponent<GlowObject>();
+            Outline glowObject = hitInfo.transform.gameObject.GetComponent<Outline>();
             if (glowObject != null)
             {
-                glowObject.OnRaycastHit();
+                glowObject.eraseRenderer = false;
                 currentObject = glowObject;
                 timeLookingAtCurrentObject += Time.deltaTime;
                 animator.SetElapsedTime(timeLookingAtCurrentObject);
@@ -63,7 +66,7 @@ public class GazeManager : MonoBehaviour
         }
         if (!detectedGlowObject && currentObject != null)
         {
-            currentObject.OnRaycastEnd();
+            currentObject.eraseRenderer = true;
             timeLookingAtCurrentObject = 0f;
             currentObject = null;
             animator.SetElapsedTime(timeLookingAtCurrentObject);
@@ -72,11 +75,20 @@ public class GazeManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        animator.AnimationEnded -= OnAnimationEnded;
         recognizer.Tapped -= OnGestureTapped;
         recognizer.HoldStarted -= OnGestureHoldStart;
         recognizer.HoldCompleted -= OnGestureHoldComplete;
         recognizer.HoldCanceled -= OnGestureHoldCanceled;
         recognizer.StopCapturingGestures();
+    }
+
+    private void OnAnimationEnded(AnimationEndedArgs args)
+    {
+        if (args.Finished && currentObject != null)
+        {
+            currentObject.transform.parent = gameObject.transform;
+        }
     }
 
     private void OnGestureTapped(TappedEventArgs args)
