@@ -8,21 +8,21 @@ public class RandomPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Set the bamboo shit to be the right distance
+        Transform bamboo = gameObject.transform.GetChild(1);
+        MoveCrateToRandom(bamboo);
+        float distance = GetDistanceFromCenter(bamboo.position.x, bamboo.position.z);
+
+        // Set the first crate's details
         Transform crate = gameObject.transform.GetChild(0);
         Vector3 currentPos = crate.position;
-        float LOW = 1.5f;
-        float HIGH = 3f;
-        float newX = GetRandomPosition(LOW, HIGH);
-        float newZ = GetRandomPosition(LOW, HIGH);
-        float distance = GetDistanceFromCenter(newX, newZ);
-        crate.transform.position = new Vector3(newX, currentPos.y, newZ);
+        MoveCrateToRandom(crate, distance, bamboo);
 
+        // Copy the create N times more
         for (int i = 0; i < numberOfCrates - 1; i++)
         {
             GameObject copy = Instantiate(crate.gameObject);
-            newX = GetRandomPosition(LOW, HIGH);
-            newZ = GetZFromX(newX, distance);
-            copy.transform.position = new Vector3(newX, currentPos.y, newZ);
+            MoveCrateToRandom(copy.transform, distance, bamboo);
             copy.transform.parent = gameObject.transform;
         }
     }
@@ -31,6 +31,30 @@ public class RandomPosition : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void MoveCrateToRandom(Transform crate, float distance = -1, Transform checkForBamboozle = null)
+    {
+        float LOW = 1.5f;
+        float HIGH = 3f;
+        float newX = GetRandomPosition(LOW, HIGH);
+        float newZ;
+        if (distance == -1)
+        {
+            newZ = GetRandomPosition(LOW, HIGH);
+        } else
+        {
+            newZ = GetZFromX(newX, distance);
+        }
+        if (checkForBamboozle != null)
+        {
+            while (crate.GetComponent<CrateCollider>().isColliding) {
+                Debug.Log("Detected collision. Moving");
+                newX = GetRandomPosition(LOW, HIGH);
+                newZ = GetZFromX(newX, distance);
+            }
+        }
+        crate.position = new Vector3(newX, crate.position.y, newZ);
     }
 
     float GetRandomPosition(float lower, float higher)
