@@ -95,6 +95,12 @@ public class RandomPosition : Singleton<RandomPosition>
 
     float GetZFromX(float x, float distance)
     {
+        if (distance < x)
+        {
+            float tmp = distance;
+            distance = x;
+            x = tmp;
+        }
         return Mathf.Sqrt(Mathf.Pow(distance, 2f) - Mathf.Pow(x, 2f));
     }
 }
