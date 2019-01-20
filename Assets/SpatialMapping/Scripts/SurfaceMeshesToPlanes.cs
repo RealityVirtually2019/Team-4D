@@ -288,8 +288,6 @@ namespace Academy.HoloToolkit.Unity
                 }
             }
 
-            Debug.Log("Finished making planes.");
-
             // We are done creating planes, trigger an event.
             EventHandler handler = MakePlanesComplete;
             if (handler != null)
