@@ -3,8 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class PadCollider : MonoBehaviour
 {
+    [SerializeField]
+    public AudioClip playOnPlacement;
+
+    [SerializeField]
+    public float timeToPlace = 1f;
+    private float timeColliding = 0f;
+
     // If an object is occupying this space
     private bool bottomLeft;
     private bool bottomRight;
@@ -46,6 +54,8 @@ public class PadCollider : MonoBehaviour
     {
         if (collider.name == "Crate" || collider.tag == "Crate")
         {
+            
+
             Transform crate = collider.transform;
             Vector3 size = GetComponent<Collider>().bounds.size;
             GazeAttacher.Instance.DetachOutline();
@@ -81,6 +91,11 @@ public class PadCollider : MonoBehaviour
                 crate.localPosition = new Vector3(0.5f, size.z / 2, -0.5f);
                 crate.name = "Crate Top Right";
                 topRight = true;
+            }
+
+            if (playOnPlacement != null)
+            {
+                GetComponent<AudioSource>().PlayOneShot(playOnPlacement);
             }
         }
     }

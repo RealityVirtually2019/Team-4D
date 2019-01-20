@@ -3,8 +3,12 @@ using Academy.HoloToolkit.Unity;
 
 [RequireComponent(typeof(Camera))]
 [RequireComponent(typeof(GazeManager))]
+[RequireComponent(typeof(AudioSource))]
 public class GazeAttacher : Singleton<GazeAttacher>
 {
+    [SerializeField]
+    public AudioClip playOnAttach;
+
     private GazeManager manager;
 
     // Start is called before the first frame update
@@ -37,5 +41,11 @@ public class GazeAttacher : Singleton<GazeAttacher>
         crateEmpty.parent = gameObject.transform;
         crateEmpty.GetComponent<BoxCollider>().isTrigger = true;
         manager.shouldObserveOutlines = false;
+
+        // Play game sound
+        if (playOnAttach != null)
+        {
+            GetComponent<AudioSource>().PlayOneShot(playOnAttach);
+        }
     }
 }

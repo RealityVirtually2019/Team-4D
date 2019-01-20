@@ -83,11 +83,15 @@ public class GazeManager : MonoBehaviour
     private void OnDestroy()
     {
         animator.AnimationEnded -= OnAnimationEnded;
-        recognizer.Tapped -= OnGestureTapped;
-        recognizer.HoldStarted -= OnGestureHoldStart;
-        recognizer.HoldCompleted -= OnGestureHoldComplete;
-        recognizer.HoldCanceled -= OnGestureHoldCanceled;
-        recognizer.StopCapturingGestures();
+        if (recognizer != null)
+        {
+            recognizer.Tapped -= OnGestureTapped;
+            recognizer.HoldStarted -= OnGestureHoldStart;
+            recognizer.HoldCompleted -= OnGestureHoldComplete;
+            recognizer.HoldCanceled -= OnGestureHoldCanceled;
+            recognizer.StopCapturingGestures();
+
+        }
     }
 
     private void OnAnimationEnded(AnimationEndedArgs args)
