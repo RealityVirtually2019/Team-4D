@@ -78,14 +78,20 @@ public class GazeManager : MonoBehaviour
                 detectedGlowObject = true;
             }
         }
+        if(currentObject != newGlowObject) {
+            if(currentObject != null) {
+                currentObject.eraseRenderer = true;
+            }
+            timeLookingAtCurrentObject = 0f;
+            currentObject = null;
+            animator.SetElapsedTime(timeLookingAtCurrentObject);
+        }
+
         if(detectedGlowObject) {
-                newGlowObject.eraseRenderer = false;
-                timeLookingAtCurrentObject += Time.deltaTime;
-                animator.SetElapsedTime(timeLookingAtCurrentObject);
-                if(currentObject != null && currentObject != newGlowObject) {
-                    currentObject.eraseRenderer = true;
-                }
-                currentObject = newGlowObject;
+            newGlowObject.eraseRenderer = false;
+            timeLookingAtCurrentObject += Time.deltaTime;
+            animator.SetElapsedTime(timeLookingAtCurrentObject);
+            currentObject = newGlowObject;
         }
     }
 
