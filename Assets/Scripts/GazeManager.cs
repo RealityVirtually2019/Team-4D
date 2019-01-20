@@ -54,9 +54,11 @@ public class GazeManager : MonoBehaviour
         {
             return;
         }
+        Outline newGlowObject = null;
         bool detectedGlowObject = false;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hitInfo, 20.0f, Physics.DefaultRaycastLayers))
-        {
+        bool hit3D = Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hitInfo, 20.0f, Physics.DefaultRaycastLayers);
+        RaycastHit2D hitInfo2D = Physics2D.Raycast(cam.transform.position, cam.transform.forward, 20.0f);
+        if (hit3D) {
             Outline glowObject = hitInfo.transform.gameObject.GetComponent<Outline>();
             if (glowObject == null && hitInfo.transform.childCount > 0)
             {
@@ -64,19 +66,26 @@ public class GazeManager : MonoBehaviour
             }
             if (glowObject != null)
             {
-                glowObject.eraseRenderer = false;
-                currentObject = glowObject;
-                timeLookingAtCurrentObject += Time.deltaTime;
-                animator.SetElapsedTime(timeLookingAtCurrentObject);
+                newGlowObject = glowObject;
                 detectedGlowObject = true;
             }
         }
-        if (!detectedGlowObject && currentObject != null)
-        {
-            currentObject.eraseRenderer = true;
-            timeLookingAtCurrentObject = 0f;
-            currentObject = null;
-            animator.SetElapsedTime(timeLookingAtCurrentObject);
+        else if(hitInfo2D) {
+            Outline glowObject = hitInfo2D.transform.gameObject.GetComponent<Outline>();
+            if (glowObject != null)
+            {
+                newGlowObject = glowObject;
+                detectedGlowObject = true;
+            }
+        }
+        if(detectedGlowObject) {
+                newGlowObject.eraseRenderer = false;
+                timeLookingAtCurrentObject += Time.deltaTime;
+                animator.SetElapsedTime(timeLookingAtCurrentObject);
+                if(currentObject != null && currentObject != newGlowObject) {
+                    currentObject.eraseRenderer = true;
+                }
+                currentObject = newGlowObject;
         }
     }
 
