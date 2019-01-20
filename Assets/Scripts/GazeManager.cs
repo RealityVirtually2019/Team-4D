@@ -1,12 +1,18 @@
 using cakeslice;
+using System;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 
 [RequireComponent(typeof(Camera))]
 public class GazeManager : MonoBehaviour
 {
+    public event Action<SelectedOutlineArgs> OnSelectedOutline;
+
     [SerializeField]
     protected SpriteRenderer clock;
+
+    [SerializeField]
+    public bool shouldObserveOutlines = true;
 
     private Camera cam;
     private Outline currentObject;
@@ -51,6 +57,10 @@ public class GazeManager : MonoBehaviour
 
     private void DetectGlowObjects()
     {
+        if (!shouldObserveOutlines)
+        {
+            return;
+        }
         bool detectedGlowObject = false;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hitInfo, 20.0f, Physics.DefaultRaycastLayers))
         {
@@ -85,9 +95,9 @@ public class GazeManager : MonoBehaviour
 
     private void OnAnimationEnded(AnimationEndedArgs args)
     {
-        if (args.Finished && currentObject != null)
+        if (args.Finished && currentObject != null && OnSelectedOutline != null)
         {
-            currentObject.transform.parent = gameObject.transform;
+            OnSelectedOutline(new SelectedOutlineArgs(currentObject));
         }
     }
 
@@ -110,4 +120,14 @@ public class GazeManager : MonoBehaviour
     {
         // throw new NotImplementedException();
     }
+}
+
+public struct SelectedOutlineArgs
+{
+    public SelectedOutlineArgs(Outline outlineObject)
+    {
+        OutlineObject = outlineObject;
+    }
+
+    public Outline OutlineObject { get; }
 }
