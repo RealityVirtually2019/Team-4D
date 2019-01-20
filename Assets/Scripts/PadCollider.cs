@@ -11,7 +11,6 @@ public class PadCollider : MonoBehaviour
 
     [SerializeField]
     public float timeToPlace = 1f;
-    private float timeColliding = 0f;
 
     // If an object is occupying this space
     private bool bottomLeft;
@@ -28,7 +27,7 @@ public class PadCollider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -50,12 +49,10 @@ public class PadCollider : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerStay(Collider collider)
     {
         if (collider.name == "Crate" || collider.tag == "Crate")
         {
-            
-
             Transform crate = collider.transform;
             Vector3 size = GetComponent<Collider>().bounds.size;
             GazeAttacher.Instance.DetachOutline();
@@ -68,6 +65,7 @@ public class PadCollider : MonoBehaviour
             crate.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             // Turn off gaze outline
             crate.GetChild(0).GetComponent<Outline>().enabled = false;
+
             if (!bottomLeft)
             {
                 crate.localPosition = new Vector3(-1f, 0f, -0.5f);
