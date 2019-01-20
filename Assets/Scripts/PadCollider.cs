@@ -19,6 +19,7 @@ public class PadCollider : MonoBehaviour
     private bool bottomRight;
     private bool topLeft;
     private bool topRight;
+    private int count;
 
     public static int CountTrue(params bool[] args)
     {
@@ -29,6 +30,7 @@ public class PadCollider : MonoBehaviour
     void Start()
     {
         bottomLeft = bottomRight = topLeft = topRight = false;
+        count = 0;
     }
 
     // Update is called once per frame
@@ -73,29 +75,34 @@ public class PadCollider : MonoBehaviour
             // Turn off gaze outline
             Destroy(crate.GetChild(0).GetComponent<Outline>());
 
+            float height = -0.2f;
             if (!bottomLeft)
             {
-                crate.localPosition = new Vector3(-1f, 0f, -0.5f);
+                crate.localPosition = new Vector3(-1f, 0f, height);
                 crate.name = "Crate Bottom Left";
                 bottomLeft = true;
+                count++;
             }
             else if (!bottomRight)
             {
-                crate.localPosition = new Vector3(-1f, size.z / 2, -0.5f);
+                crate.localPosition = new Vector3(-1f, size.z / 2, height);
                 crate.name = "Crate Bottom Right";
                 bottomRight = true;
+                count++;
             }
             else if (!topLeft)
             {
-                crate.localPosition = new Vector3(0.5f, 0f, -0.5f);
+                crate.localPosition = new Vector3(0.5f, 0f, height);
                 crate.name = "Crate Top Left";
                 topLeft = true;
+                count++;
             }
             else if (!topRight)
             {
-                crate.localPosition = new Vector3(0.5f, size.z / 2, -0.5f);
+                crate.localPosition = new Vector3(0.5f, size.z / 2, height);
                 crate.name = "Crate Top Right";
                 topRight = true;
+                count++;
             }
 
             if (playOnPlacement != null)
@@ -103,7 +110,7 @@ public class PadCollider : MonoBehaviour
                 GetComponent<AudioSource>().PlayOneShot(playOnPlacement);
             }
 
-            if (CountTrue(topLeft, topRight, bottomLeft, bottomRight) >= 3) {
+            if (count >= 3) {
                 SceneManager.LoadScene("Scenes/End", LoadSceneMode.Single);
             }
         }

@@ -6,8 +6,12 @@ public class RandomPosition : Singleton<RandomPosition>
     [SerializeField]
     public int numberOfCrates = 3;
 
+    [SerializeField]
+    public ClockAnimator clock;
+
     private int tryCount;
     private bool generated;
+    private float timeElapsed;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +29,15 @@ public class RandomPosition : Singleton<RandomPosition>
     // Update is called once per frame
     void Update()
     {
-        
+        timeElapsed += Time.deltaTime;
+        if (clock != null && timeElapsed < 10f)
+        {
+            if (generated)
+            {
+                timeElapsed = 10f;
+            }
+            clock.SetElapsedTime(timeElapsed);
+        }
     }
 
     public void GenerateCopies()

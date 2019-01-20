@@ -40,6 +40,9 @@ public class GazeAttacher : Singleton<GazeAttacher>
         Transform crateEmpty = args.OutlineObject.transform.parent;
         crateEmpty.parent = gameObject.transform;
         crateEmpty.GetComponent<BoxCollider>().isTrigger = true;
+        Rigidbody rb = crateEmpty.GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.isKinematic = true;
         manager.shouldObserveOutlines = false;
 
         // Play game sound
