@@ -2,9 +2,9 @@
 
 To see documentation from what we discovered over the weekend, visit https://github.com/RealityVirtually2019/Team-4D/wiki
 
-## Video Demonstration
+## Devpost Article
 
-[![YouTube Video](https://i.gyazo.com/19fbf93bf5cc348510416fb430bec65a.png)](https://www.youtube.com/watch?v=gFib3k2hHVY "Magic Mover")
+https://devpost.com/software/magic-mover-bl3e7p
 
 ## Inspiration
 AR technologies have been rapidly evolving only recently, and therefore have not been applied yet to the medical fields as much as VR has. However, AR seems to be promising in particular for home-based rehab because, unlike VR, AR overlaps virtual images onto the real world environments during simulation, thus possibly limiting the discomfort in patients. Recent evolutions of AR, like Hololens and Magic Leap One, by tracking the environmental structure where they are in, allow to literally place virtual objects in specific 3D positions, thus opening interesting perspectives for novel iteractive forms of rehabilitation.
@@ -12,6 +12,10 @@ AR technologies have been rapidly evolving only recently, and therefore have not
 We looked for fields where AR based rehab could contribute most, and found that post-stroke treatments could clearly benefit from the engaging interactive technology, which could help motivate and empower the patients to fully recover. In particular, this become important in the later stages of the rehab process or when patients no longer need hospital treatments, since they may want to work on their skills at home to get back to normal mobility and function.
 
 With Magic Mover, we could help by giving them the resources and motivation.
+
+## Video Demonstration
+
+[![YouTube Video](https://i.gyazo.com/19fbf93bf5cc348510416fb430bec65a.png)](https://www.youtube.com/watch?v=gFib3k2hHVY "Magic Mover")
 
 ## What it does
 We decided to build an AR game involving interacting with (i.e. moving and stacking) virtual objects. The user would move/stack them by looking at the object and placing it on a virtual mat (both of them anchored in the real space). Over time, the levels will get harder, requiring the user to move around the real space with increasing the complexity and magnitude of movements.
