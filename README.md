@@ -4,7 +4,7 @@ To see documentation from what we discovered over the weekend, visit https://git
 
 ## Video Demonstration
 
-[![YouTube Video](https://i.gyazo.com/9596e9c2819c95c7164b5ca364447506.png)](https://www.youtube.com/watch?v=gFib3k2hHVY "Magic Mover")
+[![YouTube Video](https://i.gyazo.com/19fbf93bf5cc348510416fb430bec65a.png)](https://www.youtube.com/watch?v=gFib3k2hHVY "Magic Mover")
 
 ## Inspiration
 AR technologies have been rapidly evolving only recently, and therefore have not been applied yet to the medical fields as much as VR has. However, AR seems to be promising in particular for home-based rehab because, unlike VR, AR overlaps virtual images onto the real world environments during simulation, thus possibly limiting the discomfort in patients. Recent evolutions of AR, like Hololens and Magic Leap One, by tracking the environmental structure where they are in, allow to literally place virtual objects in specific 3D positions, thus opening interesting perspectives for novel iteractive forms of rehabilitation.
